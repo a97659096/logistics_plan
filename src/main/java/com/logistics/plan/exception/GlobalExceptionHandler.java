@@ -4,6 +4,7 @@ package com.logistics.plan.exception;
 import com.logistics.plan.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,4 +40,14 @@ public class GlobalExceptionHandler {
         return R.restResult(e.getCode(), e.getMessage());
     }
 
+    /**
+     * 自定义验证异常
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public R validExceptionHandler(MethodArgumentNotValidException e)
+    {
+        log.error(e.getMessage(), e);
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        return R.failed(message);
+    }
 }

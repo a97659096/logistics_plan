@@ -9,19 +9,16 @@ import com.logistics.plan.domain.entity.DrivingRoute;
 import com.logistics.plan.domain.entity.DrivingRouteDetail;
 import com.logistics.plan.domain.entity.Node;
 import com.logistics.plan.mapper.DrivingRouteMapper;
-import com.logistics.plan.redis.RedisService;
+import com.logistics.plan.redis.RedisCache;
 import com.logistics.plan.service.DrivingRouteDetailService;
 import com.logistics.plan.service.DrivingRouteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.logistics.plan.service.NodeService;
-import com.logistics.plan.utils.CSVUtils;
 import com.logistics.plan.utils.ComUtil;
 import com.logistics.plan.utils.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ import java.util.Map;
 public class DrivingRouteServiceImpl extends ServiceImpl<DrivingRouteMapper, DrivingRoute> implements DrivingRouteService {
 
     @Autowired
-    private RedisService redisService;
+    private RedisCache redisService;
 
     @Autowired
     private NodeService nodeService;
