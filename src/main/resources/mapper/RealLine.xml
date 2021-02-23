@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logistics.plan.mapper.RealLineRepository">
+
+    <select id="findAll" resultType="com.logistics.plan.domain.entity.RealLine">
+        SELECT posting_city postingCity,reach_city reachCity,line_data lineData FROM real_line
+    </select>
+
+    <select id="findByCode" resultType="com.logistics.plan.domain.entity.RealLine">
+        SELECT posting_city_code postingCityCode,reach_city_code reachCityCode,line_data lineData FROM real_line
+    </select>
+
+	<insert id="doCreate" parameterType="com.logistics.plan.domain.entity.RealLine">
+        INSERT INTO real_line (posting_city,reach_city,line_data,posting_city_code,reach_city_code)
+        VALUES (#{postingCity},#{reachCity},#{lineData},#{postingCityCode},#{reachCityCode})
+    </insert>
+
+    <insert id="doCreateList" parameterType="java.util.List">
+        INSERT INTO real_line (posting_city,reach_city,line_data,posting_city_code,reach_city_code)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.postingCity,jdbcType=VARCHAR},
+            #{item.reachCity,jdbcType=VARCHAR},
+            #{item.lineData,jdbcType=VARCHAR},
+            #{item.postingCityCode,jdbcType=VARCHAR},
+            #{item.reachCityCode,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updatePosting" parameterType="com.logistics.plan.domain.entity.RealLine">
+        update real_line
+        <set>
+            <if test="postingCityCode != null">posting_city_code = #{postingCityCode}</if>
+        </set>
+        where posting_city = #{postingCity}
+    </update>
+    <update id="updateReach" parameterType="com.logistics.plan.domain.entity.RealLine">
+        update real_line
+        <set>
+            <if test="reachCityCode != null">reach_city_code = #{reachCityCode}</if>
+        </set>
+        where reach_city = #{reachCity}
+    </update>
+
+    <update id="updateData" parameterType="com.logistics.plan.domain.entity.RealLine">
+        update real_line
+        <set>
+            <if test="lineData != null">line_data = #{lineData}</if>
+        </set>
+        where reach_city = #{reachCity} and posting_city = #{postingCity}
+    </update>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logistics.plan.mapper.NodeMapper">
+
+    <select id="selectProvinceList" resultType="java.util.Map">
+        SELECT DISTINCT province_code, province FROM plan_node
+    </select>
+
+    <select id="selectCityListByPCode" resultType="java.util.Map">
+        SELECT DISTINCT city_code, city FROM plan_node
+        WHERE province_code = #{pCode}
+    </select>
+</mapper>
